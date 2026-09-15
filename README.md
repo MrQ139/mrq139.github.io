@@ -53,8 +53,7 @@ Use case:
 
 Repository:
 
-- `MrQ139/Master-of-Proco`  
-  Planned public-facing name: `orifice-flowmeter`
+- `MrQ139/Orifice-Flowmeter` (private)
 
 ### OpenFOAM Automation
 
@@ -67,10 +66,32 @@ Use case:
 - connect solver execution, validation, and documentation
 - prepare future automation using LLM agents and structured runbooks
 
+Repository:
+
+- `MrQ139/openfoam-automation-tool` (private)
+
 Status:
 
-- local development in progress
-- planned GitHub integration after project structure stabilizes
+- active development
+- distributed as a Windows release package; ParaView-based approval gates
+
+### Injector Cold-Flow Supply Line Test Rig
+
+Browser-based digital test rig for an injector cold-flow supply line.
+
+Use case:
+
+- inspect the supply-line P&ID interactively
+- review STEP geometry and exploded part views in the browser
+- preview atomization state and spray/momentum behaviour alongside the hardware layout
+
+Repository:
+
+- `MrQ139/procolab-coldflow-supplyline-simulator`
+
+Live:
+
+- https://mrq139.github.io/procolab-coldflow-supplyline-simulator/
 
 ## Working Philosophy
 
