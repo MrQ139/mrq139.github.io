@@ -1,117 +1,80 @@
 # 139 — Aerospace Propulsion Research Portfolio
 
-I am an aerospace engineering master's researcher focusing on pintle injectors, spray-combustion correlation, experimental data quality, and physics-informed digital twin workflows.
+I am an aerospace engineering master's researcher at the Propulsion and Combustion Laboratory (ProCo Lab), Korea Aerospace University. My work focuses on pintle injectors, spray atomization, experimental data quality, and CFD-assisted spray analysis.
 
 Current technical interests:
 
-- Pintle injector cold-flow and hot-fire data correlation
-- Spray angle, breakup, atomization, and combustion-performance linkage
-- Orifice flowmeter design and calibration for repeatable experiments
-- Obsidian-based engineering note automation
-- CFD and machine-learning assisted propulsion research workflows
+- Pintle and coaxial gas–liquid injector cold-flow experiments
+- Spray angle, liquid-sheet breakup, droplet size (SMD), and their link to momentum ratios (TMR, LMR, q, We)
+- High-speed imaging analysis of sprays and jets in crossflow
+- Agentic CFD workflows on OpenFOAM, currently for spray problems
+- Obsidian-based engineering notes and tools
 
 ## Research Direction
 
-My current research direction is to build a reliable experimental foundation first, then expand toward CFD/ML-assisted modeling.
+Build a reliable experimental foundation first, then extend it toward CFD- and data-assisted modeling.
 
-The near-term priority is experimental repeatability:
+1. run repeatable cold-flow experiments with a single control and logging program
+2. predict supply-line operating points and calibrate the model against measurements
+3. extract spray quantities from high-speed images with recorded, reproducible settings
+4. turn CSV data into experiment tables, reports, and paper-ready figures
+5. compare measurements with CFD (VOF/LPT, LES) and correlations
 
-1. establish stable cold-flow measurement procedures
-2. validate flowmeter and pressure measurement quality
-3. correlate spray characteristics with operating conditions
-4. extend the workflow toward hot-fire data
-5. prepare structured datasets for future digital-twin modeling
-
-The long-term direction is a hybrid digital-twin workflow where spray behavior is constrained by physics-based modeling and combustion behavior is supported by data-driven prediction.
+The long-term direction is a hybrid digital-twin workflow where spray behavior is constrained by physics-based modeling and supported by measured data.
 
 ## Repository Map
 
-### FormulaLab
-
-Interactive engineering-equation visualizer for Obsidian notes.
-
-Use case:
-
-- visualize Reynolds number, Weber number, momentum ratio, and other engineering equations inside Markdown notes
-- support fast conceptual reasoning during study and research logging
-- connect formulas, sliders, and plots inside a local research note system
-
-Repository:
-
-- `MrQ139/FormulaLab`
-
-### Orifice Flowmeter
-
-Python CLI, library, and Streamlit GUI for orifice flowmeter design and calibration.
-
-Use case:
-
-- estimate flow rate from pressure drop
-- size an orifice bore for a target flow condition
-- calibrate discharge coefficient using reference flow data
-- support repeatable cold-flow and propulsion test-bench measurements
-
-Repository:
-
-- `MrQ139/Orifice-Flowmeter` (private)
-
-### OpenFOAM Automation
-
-Local workflow project for OpenFOAM case generation, execution, validation, and dashboard integration.
-
-Use case:
-
-- build repeatable CFD workflows
-- reduce manual case setup errors
-- connect solver execution, validation, and documentation
-- prepare future automation using LLM agents and structured runbooks
-
-Repository:
-
-- `MrQ139/openfoam-automation-tool` (private)
-
-Status:
-
-- active development
-- distributed as a Windows release package; ParaView-based approval gates
-
-### Injector Cold-Flow Supply Line Test Rig
-
-Browser-based digital test rig for an injector cold-flow supply line.
-
-Use case:
-
-- inspect the supply-line P&ID interactively
-- review STEP geometry and exploded part views in the browser
-- preview atomization state and spray/momentum behaviour alongside the hardware layout
-
-Repository:
-
-- `MrQ139/procolab-coldflow-supplyline-simulator`
-
-Live:
-
-- https://mrq139.github.io/procolab-coldflow-supplyline-simulator/
-
-## Working Philosophy
-
-The main principle is not to maximize the number of repositories, but to keep each repository tied to a clear research function.
-
 ```text
-Research question
-  -> experimental data quality
-  -> repeatable calculation tools
-  -> CFD/automation workflow
-  -> structured dataset
-  -> future ML/digital-twin model
+procolab-sqspray            run the experiment, predict the supply line
+      │  CSV, HELOS, .cine
+      ▼
+procolab-image-analysis     spray images: static and dynamic
+procolab-data-agent         CSV → tables → reports and paper figures
+      │
+      ▼
+QFD                         OpenFOAM agentic CFD, compared with experiments
 ```
 
-## Current Priority
+### 1. Spray Experiment — `procolab-sqspray` (private)
 
-The current priority is to keep the GitHub portfolio focused around three axes:
+Control and prediction for the lab's spray test rig.
 
-1. **Experimental support tools** — orifice flowmeter and calibration utilities
-2. **Knowledge-system tools** — Obsidian-based formula visualization
-3. **CFD automation** — OpenFOAM workflow automation and validation
+- **SQSPRAYINTEGRATION**: Windows program that runs one experiment as a single timeline — pressure DAQ, valves, Coriolis flowmeters, laser-diffraction sizing, and high-speed camera trigger — and logs each run
+- **Supply-line simulator** (`supplyline/`): P&ID-based 1-D line solver, pintle spray design checker, and orifice flowmeter design / discharge-coefficient calibration engine
 
-Temporary AI experiments and empty sandbox repositories should remain private, archived, or excluded from the public portfolio.
+### 2. Image Analysis — `procolab-image-analysis` (private)
+
+Quantitative analysis of high-speed spray images.
+
+- Static: time-averaged images, spray angle, liquid-sheet length, jet-in-crossflow penetration trajectory compared with Wu et al. (1997)
+- Dynamic: instantaneous shape time series, FFT, DMD/POD (in progress)
+- Runs as Claude Code skills today; standalone Python / executable planned
+
+### 3. Data and Reports — `procolab-data-agent` (private)
+
+From raw CSV to experiment tables and reports.
+
+- Weber number, momentum flux ratio, and momentum ratios against x50 and SMD
+- Korean lab-format reports (A4) and slide decks, with PDF export
+- Planned: conversational post-processing and paper-ready figure styles
+
+### 4. CFD — `QFD` (private)
+
+Agentic CFD program built on OpenFOAM for Windows.
+
+- Problem definition → mesh → solver plan → monitoring → post-processing and validation, with a user approval gate at each step
+- Works with the user's own LLM API key; no developer tools needed at runtime
+- Current focus: spray problems such as liquid jet in crossflow (VOF-LPT, LES)
+
+### 5. Obsidian Plugins
+
+Tools for engineering notes in Obsidian.
+
+- [`obsidian-formulalab`](https://github.com/MrQ139/obsidian-formulalab) (public): interactive formula plots, animated textbook flows, and teaching-scale finite-volume and 2-D Navier–Stokes blocks inside notes
+- `obsidian-q-assistant` (private): vault-scoped sidebar assistant that works with Codex, Claude Code, Gemini, or OpenAI and can write FormulaLab blocks
+
+## Working Principles
+
+- One repository per research function
+- Raw data is never overwritten; every result keeps the settings that produced it
+- Tools must run on another lab Windows PC from a GitHub download alone
